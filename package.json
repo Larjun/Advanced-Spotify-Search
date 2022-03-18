@@ -1,0 +1,21 @@
+{
+  "name": "advanced-spotify-search",
+  "version": "1.0.0",
+  "description": "Advanced Spotify Search is a webapp which allows to search for songs through detailed search parameters and create playlists. Made for CSCI 4448 Project 5.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Larjun/Advanced-Spotify-Search.git"
+  },
+  "keywords": [],
+  "author": "Arjun Lakshmi Narasimhan, Kyle Kells, Ben Wedeen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Larjun/Advanced-Spotify-Search/issues"
+  },
+  "homepage": "https://github.com/Larjun/Advanced-Spotify-Search#readme"
+}
