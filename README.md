@@ -5,3 +5,12 @@ Made By:
   - Arjun Lakshmi Narasimhan
   - Kyle Kells
   - Ben Wedeen.
+
+
+To install all NPM packages, run
+
+```
+./init.bash
+```
+
+After installing any packages, add the package name to the init.bash file.
