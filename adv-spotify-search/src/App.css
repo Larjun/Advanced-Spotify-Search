@@ -25,7 +25,7 @@ a {
 }
 
 .gradient__bg {
-  min-height: 1100px;
+  min-height: 1300px;
     /* ff 3.6+ */
     background:-moz-radial-gradient(circle at 3% 25%, #212121 0%, #212121 100%);
     /* safari 5.1+,chrome 10+ */
