@@ -47,7 +47,7 @@ h1 {
     flex-direction: column;
     
     padding: 0rem 2rem;
-    font-weight: 5+00;
+    font-weight: 600;
     font-size: 1.5vh;
     display: flex;
   }
@@ -61,7 +61,7 @@ ul {
     padding: 2rem;
 
     li {
-      font-size: 1.1vh;
+      font-size: 1.3vh;
       display: flex;
       gap: 1rem;
       cursor: pointer;
