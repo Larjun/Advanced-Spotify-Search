@@ -2,8 +2,6 @@ import React from 'react'
 import spotifyTextLogo from './../assets/spotifyTextLogo.png'
 import styledComponents from 'styled-components';
 
-
-
 export default function Login() {
 
     const handleClick = () => {
@@ -18,7 +16,11 @@ export default function Login() {
             'user-read-currently-playing',
             'user-read-recently-played',
             'user-read-playback-position',
-            'user-top-read'
+            'user-top-read',
+            'playlist-read-collaborative',
+            'playlist-modify-public',
+            'playlist-read-private',
+            'playlist-modify-private',
         ];
         window.location.href = `${apiUrl}?client_id=${clientId}&redirect_uri=${redirectUrl}&scope=${scope.join(" ")}
         &response_type=token&show_dialogue=true`;
@@ -52,7 +54,7 @@ const Container = styledComponents.div`
         background-color: var(--color-spotify);
         font-size: 1.4rem;
         font-family: 'Raleway', sans-serif;
-        font-weight: 600;
+        font-weight: 900;
         cursor: pointer;
     }
     `;
