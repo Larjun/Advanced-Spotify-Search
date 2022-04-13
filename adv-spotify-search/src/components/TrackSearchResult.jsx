@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-export default function TrackSearchResult({track}) {
-    function selectTrack() {
-        //do nothing atm
+export default function TrackSearchResult({track, chooseTrack}) {  
+    function selectTrack(track) {
+        
     }
 
     return (
     <div
     className="d-flex m-2 align-items-center"
     style={{cursor: "pointer"}}
-    onClick={selectTrack}>
-        <img src = {track.albumUrl} style={{height:"64px", width:"64px"}} />
+    onClick={() => {chooseTrack(track)}}
+    >
+        <img src = {track.albumUrl} style={{height:"64px", width:"64px"}} onClick={selectTrack(track)}/>
         <div className='ml-3'>
             <div>{track.title}</div>
             <div className='text-muted'>{track.artist}</div>
