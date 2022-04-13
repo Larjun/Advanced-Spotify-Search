@@ -4,8 +4,9 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Body from './Body';
 import Footer from './Footer';
+import SearchBody from './SearchBody';
 
-export default function Spotify() {
+export default function Spotify(Token) {
     return (
         <Container>
             <div className='spotify__body'>
@@ -13,7 +14,7 @@ export default function Spotify() {
                 <div className='body'>
                     <Navbar />
                     <div className='body-contents'>
-                        <Body />
+                        <SearchBody />
                     </div>
                 </div>
             </div>
