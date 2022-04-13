@@ -6,6 +6,10 @@ import { MdHomeFilled, MdSearch } from "react-icons/md";
 import Playlists from './Playlists';
 
 export default function Sidebar() {
+  const navToSearch = () => {
+
+  }
+
   return (
     <Container>
       <div className="top__links">
@@ -23,7 +27,7 @@ export default function Sidebar() {
           </li>
           <li>
             <IoLibrary />
-            <span>Your Library</span>
+            <span onClick={navToSearch}>Your Library</span>
           </li>
         </ul>
       </div>
