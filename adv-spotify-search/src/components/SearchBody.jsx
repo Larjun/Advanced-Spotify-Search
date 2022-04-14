@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import {Container, Form, Row, Col} from 'react-bootstrap'
+import {Container, Form, Row, Col, Button} from 'react-bootstrap'
 import SpotifyWebApi from 'spotify-web-api-node'
 import TrackSearchResult from './TrackSearchResult'
 
@@ -64,7 +64,7 @@ export default function SearchBody() {
         )
       })
 
-      setSearch('')
+      //setSearch('')
       
     }
     function printTrackInfo() {
@@ -79,11 +79,21 @@ export default function SearchBody() {
         return (
           <>
             <img src={biggestAlbumUimage.url} style={{height:"100px", width:"100px"}}></img>
-            <h3>Title: {selectedTrack.name}</h3>
+            <h3 style={{marginTop: "25px"}}>Title: {selectedTrack.name}</h3>
             <h3>Artist: {selectedTrack.artists[0].name}</h3>
-            <h4>Acousticness: {audioFeatures.acousticness}</h4>
-            <h4>Danceability: {audioFeatures.danceability}</h4>
-            <h4>Energy: {audioFeatures.energy}</h4>
+            <h3>Album: {selectedTrack.album.name} </h3>
+            <h3 style={{marginTop: "25px", textDecoration: "underline"}}>Track Information</h3>
+            <h5>Acousticness: {audioFeatures.acousticness}</h5>
+            <h5>Danceability: {audioFeatures.danceability}</h5>
+            <h5>Energy: {audioFeatures.energy}</h5>
+            <h5>Tnstrumentalness: {audioFeatures.instrumentalness}</h5>
+            <h5>Liveness: {audioFeatures.liveness}</h5>
+            <h5>Loudness: {audioFeatures.loudness} db</h5>
+            <h5>Speechiness: {audioFeatures.speechiness}</h5>
+            <h5>Valence: {audioFeatures.valence}</h5>
+
+            <Button href={selectedTrack.external_urls.spotify} variant="outline-light"> Play This Song On Spotify</Button>
+            
           </>
         )
       }
@@ -148,7 +158,7 @@ export default function SearchBody() {
               ))}
             </div>
             </Col>
-              <Col xs={6} md={4} style={{color: "white"}} className="py-3">
+              <Col xs={6} md={4} style={{color: "white"}} className="py-5">
                 {/* UI For Song Stats Goes Here*/}
                 {printTrackInfo()}
               </Col>
