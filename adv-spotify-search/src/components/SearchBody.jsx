@@ -86,7 +86,7 @@ export default function SearchBody() {
             <h5>Acousticness: {audioFeatures.acousticness}</h5>
             <h5>Danceability: {audioFeatures.danceability}</h5>
             <h5>Energy: {audioFeatures.energy}</h5>
-            <h5>Tnstrumentalness: {audioFeatures.instrumentalness}</h5>
+            <h5>Instrumentalness: {audioFeatures.instrumentalness}</h5>
             <h5>Liveness: {audioFeatures.liveness}</h5>
             <h5>Loudness: {audioFeatures.loudness} db</h5>
             <h5>Speechiness: {audioFeatures.speechiness}</h5>
