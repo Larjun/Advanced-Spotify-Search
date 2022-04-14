@@ -9,6 +9,7 @@ const clientId = 'd677f29341d8486f90c37f08fe86a25e'
 const spotifyApi = new SpotifyWebApi({
     clientId: clientId
 })
+
 export default function SearchBody() {
     const getSongURL = 'https://api.spotify.com/v1/search/?type=track&q='
     const [search, setSearch] = useState("")
@@ -16,12 +17,13 @@ export default function SearchBody() {
     const [selectedTrack, setSelectedTrack] = useState([])
     const [audioFeatures, setAudioFeatures] = useState([])
     const token = window.location.hash.substring(1).split("&")[0].split('=')[1];
+    
 
     function chooseTrack(track) {
       //setSelectedTrack(track)
       
       spotifyApi.getTrack(track.id).then(res => {
-        console.log(res)
+        //console.log(res)
         setSelectedTrack(
           /*res.body.map(track => {
             const biggestAlbumUimage = track.album.images.reduce(
@@ -44,7 +46,7 @@ export default function SearchBody() {
         )
       })
       spotifyApi.getAudioFeaturesForTrack(track.id).then(res => {
-        console.log(res)
+        //console.log(res)
         setAudioFeatures(
           /*res.body.map(track=> {
             return{
@@ -63,8 +65,31 @@ export default function SearchBody() {
       })
 
       setSearch('')
+      
+    }
+    function printTrackInfo() {
+      if(selectedTrack.length == null) {
+        const biggestAlbumUimage = selectedTrack.album.images.reduce(
+          (biggest, image) => {
+            if (image.height > biggest.height) return image
+            return biggest
+          },
+          selectedTrack.album.images[0]
+        )
+        return (
+          <>
+            <img src={biggestAlbumUimage.url} style={{height:"100px", width:"100px"}}></img>
+            <h3>Title: {selectedTrack.name}</h3>
+            <h3>Artist: {selectedTrack.artists[0].name}</h3>
+            <h4>Acousticness: {audioFeatures.acousticness}</h4>
+            <h4>Danceability: {audioFeatures.danceability}</h4>
+            <h4>Energy: {audioFeatures.energy}</h4>
+          </>
+        )
+      }
     }
 
+    
     useEffect(() => {
         if(!token) return
         else spotifyApi.setAccessToken(token)
@@ -123,12 +148,10 @@ export default function SearchBody() {
               ))}
             </div>
             </Col>
-            <Col xs={6} md={4} style={{color: "white"}} className="py-3">
-              {/* UI For Song Stats Goes Here*/}
-                
-              <h3>{selectedTrack.name}</h3>
-              <h4>{audioFeatures.acousticness}</h4>
-            </Col>
+              <Col xs={6} md={4} style={{color: "white"}} className="py-3">
+                {/* UI For Song Stats Goes Here*/}
+                {printTrackInfo()}
+              </Col>
           </Row>
         </Container>
     )
