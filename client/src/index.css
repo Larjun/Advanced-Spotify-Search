@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+:root {
+  --font-family: 'Raleway', sans-serif;
+  --gradient-bg: linear-gradient(103.22deg, #212121 -13.86%, #121212 99.55%);
+  
+  --color-bg: #212122;
+  --color-text: #FFFFFF;
+  --color-subtext: #B3B3B3;
+  --color-spotify: #1db954;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
