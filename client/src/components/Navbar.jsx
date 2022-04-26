@@ -27,6 +27,7 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   transition: 0.3s ease-in-out;
+  
 
   .avatar {
     background-color: black;

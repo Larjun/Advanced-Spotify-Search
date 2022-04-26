@@ -15,6 +15,7 @@
     "react-bootstrap": "^2.2.3",
     "react-dom": "^18.0.0",
     "react-icons": "^4.3.1",
+    "react-ranger": "^2.1.0",
     "react-scripts": "5.0.0",
     "sass": "^1.51.0",
     "spotify-web-api-node": "^5.0.2",
@@ -44,5 +45,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.5",
+    "webpack": "^5.72.0"
   }
 }

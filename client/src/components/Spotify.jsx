@@ -56,12 +56,7 @@ export default function Spotify(Token) {
                 console.log(data.body.id);
                 var currUser = data.body.id
                     spotifyApi.getUserPlaylists(currUser).then(pl => {
-<<<<<<< HEAD
-                        console.log(pl.body.items);
-                        axios.post('http://localhost:3001/init', {
-=======
                         axios.post('http://localhost:3000/init', {
->>>>>>> b80619dc738113e7548a5eb3c5b94ab4514eaf36
                             token: spotifyToken,
                             userId: currUser,
                             playlists: pl.body.items
@@ -88,7 +83,6 @@ export default function Spotify(Token) {
                     <Navbar />
                     <div className='body-contents'>
                         <AdvSearch />
-                        
                     </div>
                 </div>
             </div>
