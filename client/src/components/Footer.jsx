@@ -1,5 +1,5 @@
 import React from 'react'
-import styledComponents from 'styled-components'
+import styled from 'styled-components'
 
 export default function Footer() {
   return (
@@ -9,7 +9,7 @@ export default function Footer() {
   )
 }
 
-const Container = styledComponents.div`
+const Container = styled.div`
   background-color: #121212;
   height: 100%;
   `

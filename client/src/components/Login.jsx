@@ -1,6 +1,6 @@
 import React from 'react'
 import spotifyTextLogo from '../assets/spotifyTextLogo.png'
-import styledComponents from 'styled-components';
+import styled from 'styled-components';
 import axios from 'axios'
 
 export default function Login() {
@@ -36,7 +36,7 @@ export default function Login() {
   );
 };
 
-const Container = styledComponents.div` 
+const Container = styled.div` 
     display: flex;
     flex-direction: column;
     align-items: center;
