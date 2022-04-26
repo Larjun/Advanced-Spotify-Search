@@ -12,7 +12,7 @@ const spotifyApi = new spotifyWebApi({
     clientId: clientId
 })
 
-export default function Sidebar() {
+export default function Sidebar(playlists) {
   const navToSearch = () => {
 
   }
@@ -159,7 +159,7 @@ export default function Sidebar() {
           </li>
         </ul>
       </div>
-      <Playlists />
+      <Playlists playlists={playlists}/>
     </Container>
   )
 }

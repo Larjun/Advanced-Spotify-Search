@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
@@ -23,6 +23,7 @@ const spotifyApi = new SpotifyWebApi({
 export default function Spotify(Token) {
 
     const [{ token }, dispatch] = useStateProvider();
+    const [playlists, setPlaylists] = useState([]);
 
     useEffect(()=> {
         const getUserInfo = async ()=> {
@@ -45,44 +46,53 @@ export default function Spotify(Token) {
 
     //console.log("Token is: " + Token)
     const spotifyToken = window.location.hash.substring(1).split("&")[0].split('=')[1]
-   
+    //var playlistArr = []
     useEffect(() => {
         var initialized = false;
-    
         if(!initialized) {
             spotifyApi.setAccessToken(spotifyToken)
             spotifyApi.getMe()
             .then(function(data) {
                 console.log(data.body.id);
                 var currUser = data.body.id
-                    spotifyApi.getUserPlaylists(currUser).then(pl => {
-                        axios.post('http://localhost:3000/init', {
-                            token: spotifyToken,
-                            userId: currUser,
-                            playlists: pl.body.items
-                        }).then(function (response) {
-                            console.log(response);
-                            console.log(initialized)
+                spotifyApi.getUserPlaylists(currUser).then(pl => {
+                    console.log(pl.body.items);
+                    axios.post('http://localhost:3001/init', {
+                        token: spotifyToken,
+                        userId: currUser,
+                        playlists: pl.body.items
+                    }).then(() => {
+                        console.log('Getting Playlists')
+                        axios.get('http://localhost:3001/getPlaylists')
+                        .then((res) => {
+                            //console.log(res.data)
+                            setPlaylists(result => [res.data])
+
+                            setPlaylists(result => [res.data])
+                            //console.log(playlists)
                         })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                    }).catch(err => {
-                       console.log(err) 
+                        .catch((err1) => {console.log(err1)})
                     })
-                    initialized = true
-                });
-        }
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                }).catch(err => {
+                   console.log(err) 
+                })
+                initialized = true
+            })
                 
-    }, [])
+        }
+    }, [token])
     return (
         <Container>
             <div className='spotify__body'>
-                <Sidebar />
+                <Sidebar playlists={playlists}/>
                 <div className='body'>
                     <Navbar />
                     <div className='body-contents'>
                         <AdvSearch />
+                        
                     </div>
                 </div>
             </div>

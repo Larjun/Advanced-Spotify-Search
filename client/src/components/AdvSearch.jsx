@@ -472,7 +472,7 @@ const AdvSearch = () => {
       <br />
       <br />
       
-      <button className="submitButton">Generate Playlist</button>
+      <button className="submitButton" onClick={()=>callSearch()}>Generate Playlist</button>
     </Container>
   );
 }
