@@ -19,6 +19,7 @@ mongoose.connection.on('error', err => {console.log(err);});
 
 const middlewares = require('./middlewares');
 const api = require('./api');
+const { count } = require('console');
 
 const app = express();
 
@@ -29,7 +30,8 @@ app.use(express.json());
 
 
 var spotifyApi = new SpotifyWebApi({
-  clientId: 'd677f29341d8486f90c37f08fe86a25e'
+  clientId: 'd677f29341d8486f90c37f08fe86a25e',
+  clientSecret: 'a427a0942d3441b292f2df3e74555c34'
 });
 
 // ----------------------------------------------------------------
@@ -37,7 +39,8 @@ var spotifyApi = new SpotifyWebApi({
 var userSchema = new mongoose.Schema({
   userId: String,
   createdPlaylist: [{
-      playlistId: String
+      playlistId: String,
+      playlistUrl: String
   }],
   likedTracks: [{
       trackId: String
@@ -58,29 +61,44 @@ User.remove({}, (err) => {
   }
 })
 
-
 app.get('/', (req, res) => {
   res.json({
     message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄'
   });
 });
+
 var token;
 var currUser;
+
 app.post('/init', (req, res) => {
   token = req.body.token;
   spotifyApi.setAccessToken(token);
-  currUser = req.body.userId;
-  console.log("User is: " + currUser);
-  User.findOne({userId: currUser}, (err, user) => {
-    if (err) {
-      console.log(err);
-    } else {
-      spotifyApi.getMe().then((me) => {
-        console.log(me.body);
-      })
+  currUserId = req.body.userId;
+  //console.log("User is: " + currUser);
+  //console.log(req.body.playlists)
+  currUser = User.findOne({userId: currUserId});
+  /*if (currUser.userId) {
+    for(let i = 0; i < currUser.playlists.length; i++) {
+      var found = false;
+      for(let j = 0; j < req.body.playlists.length; j++) {
+        if(req.body.playlists[j].id == currUser.playlists[i].playlistId) {
+          found = true;
+        }
+        if(!found) {
+          currUser.playlists.pop(i, 1)
+        }
+      }
     }
-  })
+  }*/
+  console.log("Current user is: " + currentUser);
+
 //  res.redirect()
+})
+
+app.post('/addPlaylist', (req, res) => {
+  console.log("Called addPlaylist")
+  currUser.playlists.push([req.body.playlistId, req.body.playlistLink])
+  console.log(currUser)
 })
 
 
