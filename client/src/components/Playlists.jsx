@@ -1,40 +1,49 @@
-import React, { useEffect }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { useStateProvider } from '../utils/StateProvider';
 import axios from "axios";
 import { reducerCases } from '../utils/Constants';
 import styled from 'styled-components';
+import SpotifyWebApi from 'spotify-web-api-node';
 
-export default function Playlists() {
-        const [{ token, playlists }, dispatch] = useStateProvider();
-        console.log(token);
-        useEffect(() => {
-            const getPlaylistData = async () => {
-                const response = await axios.get("https://api.spotify.com/v1/me/playlists", 
-                {
-                    headers: {  
-                        Authorization: "Authorization: Bearer " + token,
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            const { items } = response.data
-            console.log(response);
-            console.log(items);
-            const playlists = items.map(({name, id}) => {
-                return { name, id };
-            });
-            console.log(playlists);
-            dispatch({type:reducerCases.SET_PLAYLISTS, playlists});
-        };
-        getPlaylistData();
-        }, [token, dispatch])
+const clientId = 'd677f29341d8486f90c37f08fe86a25e'
+const spotifyApi = new SpotifyWebApi({
+    clientId: clientId
+})
+
+export default function Playlists(playlistArr) {
+      const [playlist, setPlaylistData] = useState([])
+      const token = window.location.hash.substring(1).split("&")[0].split('=')[1];
+      
+      
+      useEffect(() => {
+        setPlaylistData([])
+        spotifyApi.setAccessToken(token)
+        const pl = playlistArr.playlists.playlists[0]
+        let it = 0
+        if (pl && it == 0) {
+          console.log("Playlist Length: " + pl.length)
+          pl.forEach(async i => {
+            const plInfo = await spotifyApi.getPlaylist(i.playlistId)
+            if(!playlist.includes({'name': plInfo.body.name, 'url': plInfo.body.external_urls.spotify, 'id': plInfo.body.id})){
+              setPlaylistData(curr => [...curr, {'name': plInfo.body.name, 'url': plInfo.body.external_urls.spotify, 'id': plInfo.body.id}])
+              it++
+            } else {
+              setPlaylistData([])
+            }
+          })
+        }
+      }, [playlistArr, token])
+      
     return (
     <Container>
         <h1>Your Playlists</h1>
         <ul>
-            {playlists.map(({name, id}) => {
-                    return <li key={id}>{name}</li>
-            })}
+          {console.log(playlist)}
+          {
+          [...new Set(playlist)].map(p => {
+            return <li key={p.id}><a href={p.url}>{p.name}</a></li>
+          })
+          }
         </ul>
     </Container>
   )
@@ -42,6 +51,14 @@ export default function Playlists() {
 
 const Container = styled.div`
 height: 100%;
+
+a {
+  color: inherit;
+  $hover {
+    color: inherit
+  }
+  text-decoration: inherit;
+}
 
 h1 {
     display: flex;

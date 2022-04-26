@@ -53,13 +53,13 @@ const User = mongoose.model("User", userSchema);
 
 
 // Refresh db, don't do this in production
-User.remove({}, (err) => {
+/*User.remove({}, (err) => {
   if (err) {
       console.log(err);
   } else {
       console.log("removed users!");
   }
-})
+})*/
 
 app.get('/', (req, res) => {
   res.json({
@@ -68,16 +68,16 @@ app.get('/', (req, res) => {
 });
 
 var token;
-var currUserId;
+var currUserId = "";
 
 async function getUser(currUser, playlists) {
   const user = await User.findOne({userId: currUser})
   if(!user) {
-    console.log("Creating New User")
+    //console.log("Creating New User")
     const newUser = await User.create({userId: currUser})
     return newUser
   } else {
-    console.log("Updating Playlists")
+    //console.log("Updating Playlists")
     user.createdPlaylist = user.createdPlaylist.filter(function(item) {
       for(let i = 0; i < playlists.length; i++) {
         if(playlists[i].id == item.playlistId) {return item}
@@ -98,11 +98,24 @@ async function addToPlaylist(currUser, playlistId, playlistLink) {
   }
 }
 
+async function getPlaylist(currUser) {
+  const user = await User.findOne({userId: currUser}).then(user => {
+    //console.log(user.createdPlaylist)
+    return user.createdPlaylist
+  })
+  //console.log("Getting playlists")
+  //console.log(user.createdPlaylist)
+  return user.createdPlaylist
+}
+
 app.post('/init', (req, res) => {
   token = req.body.token;
   spotifyApi.setAccessToken(token);
   currUserId = req.body.userId;
-  getUser(currUserId, req.body.playlists).then((user) => {console.log(user)})
+  getUser(currUserId, req.body.playlists).then((user) => {/*console.log(user)*/})
+  //const playlists = getPlaylist(currUserId)
+  res.send({"playlist": "Hello World"})
+
 })
 
 app.post('/addPlaylist', (req, res) => {
@@ -111,6 +124,15 @@ app.post('/addPlaylist', (req, res) => {
   addToPlaylist(currUserId, req.body.playlistId, req.body.playlistLink)
 })
 
+app.get("/getPlaylists", (req, res) =>{
+  //while(currUserId = "") {
+    console.log("This is called")
+    console.log(currUserId)
+    User.findOne({userId: currUserId}).then((user) =>{
+      console.log(user.createdPlaylist)
+      res.send(user.createdPlaylist)
+    })
+})
 
 app.use('/api/v1', api);
 
