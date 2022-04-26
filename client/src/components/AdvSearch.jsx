@@ -1,9 +1,5 @@
 import React from 'react'
 import styleds from 'styled-components'
-import spotifyTextLogo from '../assets/spotifyTextLogo.png';
-import {IoLibrary} from 'react-icons/io5';
-import { MdHomeFilled, MdSearch } from "react-icons/md";
-import Playlists from './Playlists';
 import axios from 'axios'
 import spotifyWebApi from 'spotify-web-api-node'
 
@@ -12,10 +8,11 @@ const spotifyApi = new spotifyWebApi({
     clientId: clientId
 })
 
-export default function Sidebar() {
+const AdvSearch = () => {
   const navToSearch = () => {
 
   }
+
   const spotifyToken = window.location.hash.substring(1).split("&")[0].split('=')[1]
   spotifyApi.setAccessToken(spotifyToken)
 
@@ -32,7 +29,14 @@ export default function Sidebar() {
     return result
   }
   
-  async function generateSongList(acousL = 0, acousH = 1, danceL = 0, danceH = 1, enL = 0, enH = 1, instL = 0, instH = 1, liveL = 0, liveH = 1, speechL = 0, speechH = 1, valL = 0, valH = 1, length = 10) {
+  async function generateSongList(
+                                acousL = 0, acousH = 1, 
+                                danceL = 0, danceH = 1, 
+                                enL = 0, enH = 1, instL = 0, 
+                                instH = 1, liveL = 0, liveH = 1, 
+                                speechL = 0, speechH = 1, 
+                                valL = 0, valH = 1, 
+                                length = 10) {
     var count = 0;
     var trackList = [];
 
@@ -112,7 +116,7 @@ export default function Sidebar() {
           newTrackList.push("spotify:track:" + trackList[i])
         }
         console.log(newTrackList)
-        
+
           spotifyApi.createPlaylist('Playist Made In Adv Search', {'description' : 'Made in advance spotify search', 'public': true}).then((playlist) => {
             playlistId = playlist.body.id;
             playlistLink = playlist.body.external_urls.spotify
@@ -139,67 +143,8 @@ export default function Sidebar() {
   }
 
   return (
-    <Container>
-      <div className="top__links">
-        <div className="logo">
-          <img src={spotifyTextLogo} alt=""/>
-        </div>
-        <ul>
-          <li>
-            <MdHomeFilled />
-            <span>Home</span>
-          </li>
-          <li>
-            <MdSearch />
-            <a><span>Search</span></a>
-          </li>
-          <li>
-            <IoLibrary />
-            <span onClick={navToSearch}>Your Library</span>
-          </li>
-        </ul>
-      </div>
-      <Playlists />
-    </Container>
+    <div>AdvSearch</div>
   )
 }
 
-const Container = styleds.div`
-  background-color: black;
-  color: #b3b3b3;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  .top__links {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 100px;
-    .logo {
-      text-align: center;
-      margin: 1rem 0;
-      img {
-        max-inline-size: 80%;
-        block-size: auto;
-      }
-    }
-  }
-  ul {
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    
-    gap: 2.5rem;
-    padding: 2rem;
-    li {
-      font-size: 1.4vh;
-      display: flex;
-      gap: 1rem;
-      cursor: pointer;
-      transition: 0.3s ease-in-out;
-      &:hover {
-        color: white;
-      }
-    }
-  }
-  `;
+export default AdvSearch

@@ -2,7 +2,7 @@ import React, { useEffect }  from 'react';
 import { useStateProvider } from '../utils/StateProvider';
 import axios from "axios";
 import { reducerCases } from '../utils/Constants';
-import styledComponent from 'styled-components';
+import styled from 'styled-components';
 
 export default function Playlists() {
         const [{ token, playlists }, dispatch] = useStateProvider();
@@ -40,7 +40,8 @@ export default function Playlists() {
   )
 }
 
-const Container = styledComponent.div`
+const Container = styled.div`
+height: 100%;
 
 h1 {
     display: flex;
@@ -59,13 +60,25 @@ ul {
     
     gap: 2.5rem;
     padding: 2rem;
-
+    height: 55vh;
+    max-height: 100%;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 0.4rem;
+      &-thumb {
+        background-color: rgba(255,255,255,0.6)
+      }
+      &:hover {
+        background-color: rgba(255,255,255,0.3)
+      }
+    }
     li {
       font-size: 1.3vh;
       display: flex;
       gap: 1rem;
       cursor: pointer;
       transition: 0.3s ease-in-out;
+      overflow: none;
       &:hover {
         color: white;
       }
