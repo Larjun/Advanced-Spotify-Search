@@ -202,15 +202,15 @@ const AdvSearch = () => {
 
   const [values0, setValues0] = React.useState([20, 80]);
 
-  const [values1, setValues1] = React.useState([20, 80]);
+  const [values1, setValues1] = React.useState([10, 90]);
 
   const [values2, setValues2] = React.useState([20, 80]);
 
-  const [values3, setValues3] = React.useState([20, 80]);
+  const [values3, setValues3] = React.useState([10, 90]);
 
   const [values4, setValues4] = React.useState([20, 80]);
 
-  const [values5, setValues5] = React.useState([20, 80]);
+  const [values5, setValues5] = React.useState([10, 90]);
 
   const [values6, setValues6] = React.useState([20, 80]);
 
@@ -481,7 +481,7 @@ export default AdvSearch
 
 const Container = styled.div`
   
-  margin-bottom: 1000px;
+  margin-bottom: 200px;
   h1 {
     font-family: 'Raleway', sans-serif;
     font-weight: 800;
