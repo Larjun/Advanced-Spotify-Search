@@ -30,6 +30,7 @@ export default function Spotify(Token) {
                 console.log(data.body.id);
                 var currUser = data.body.id
                     spotifyApi.getUserPlaylists(currUser).then(pl => {
+                        console.log(pl.body.items);
                         axios.post('http://localhost:3001/init', {
                             token: spotifyToken,
                             userId: currUser,

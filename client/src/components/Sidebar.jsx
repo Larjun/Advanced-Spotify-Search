@@ -114,7 +114,7 @@ export default function Sidebar() {
           newTrackList.push("spotify:track:" + trackList[i])
         }
         console.log(newTrackList)
-
+        
           spotifyApi.createPlaylist('Playist Made In Adv Search', {'description' : 'Made in advance spotify search', 'public': true}).then((playlist) => {
             playlistId = playlist.body.id;
             playlistLink = playlist.body.external_urls.spotify
