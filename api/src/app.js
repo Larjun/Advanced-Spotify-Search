@@ -68,37 +68,47 @@ app.get('/', (req, res) => {
 });
 
 var token;
-var currUser;
+var currUserId;
+
+async function getUser(currUser, playlists) {
+  const user = await User.findOne({userId: currUser})
+  if(!user) {
+    console.log("Creating New User")
+    const newUser = await User.create({userId: currUser})
+    return newUser
+  } else {
+    console.log("Updating Playlists")
+    user.createdPlaylist = user.createdPlaylist.filter(function(item) {
+      for(let i = 0; i < playlists.length; i++) {
+        if(playlists[i].id == item.playlistId) {return item}
+      }
+    })
+    user.save()
+  }
+  return user
+}
+
+async function addToPlaylist(currUser, playlistId, playlistLink) {
+  const user = await User.findOne({userId: currUser})
+  if(user) {
+    console.log("Adding To Playlist")
+    user.createdPlaylist.push({playlistId: playlistId, playlistUrl: playlistLink})
+    user.save()
+    console.log(user)
+  }
+}
 
 app.post('/init', (req, res) => {
   token = req.body.token;
   spotifyApi.setAccessToken(token);
   currUserId = req.body.userId;
-  //console.log("User is: " + currUser);
-  //console.log(req.body.playlists)
-  currUser = User.findOne({userId: currUserId});
-  /*if (currUser.userId) {
-    for(let i = 0; i < currUser.playlists.length; i++) {
-      var found = false;
-      for(let j = 0; j < req.body.playlists.length; j++) {
-        if(req.body.playlists[j].id == currUser.playlists[i].playlistId) {
-          found = true;
-        }
-        if(!found) {
-          currUser.playlists.pop(i, 1)
-        }
-      }
-    }
-  }*/
-  console.log("Current user is: " + currentUser);
-
-//  res.redirect()
+  getUser(currUserId, req.body.playlists).then((user) => {console.log(user)})
 })
 
 app.post('/addPlaylist', (req, res) => {
   console.log("Called addPlaylist")
-  currUser.playlists.push([req.body.playlistId, req.body.playlistLink])
-  console.log(currUser)
+  console.log(currUserId)
+  addToPlaylist(currUserId, req.body.playlistId, req.body.playlistLink)
 })
 
 
