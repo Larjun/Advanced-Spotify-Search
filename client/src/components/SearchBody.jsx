@@ -22,6 +22,15 @@ export default function SearchBody() {
     function chooseTrack(track) {
       //setSelectedTrack(track)
       
+      axios.post('http://localhost:3001/makePlaylist', {
+        text: "Hello, world"
+      }).then(function (response) {
+          console.log(response);
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+
       spotifyApi.getTrack(track.id).then(res => {
         //console.log(res)
         setSelectedTrack(
@@ -44,6 +53,7 @@ export default function SearchBody() {
           })*/
           res.body
         )
+        console.log(track.id)
       })
       spotifyApi.getAudioFeaturesForTrack(track.id).then(res => {
         //console.log(res)
@@ -115,6 +125,7 @@ export default function SearchBody() {
         spotifyApi.searchTracks(search).then(res => {
           //console.log(res)
           if (cancel) return
+          console.log(res.body.tracks)
           setSearchResults(
             res.body.tracks.items.map(track => {
               const smallestAlbumImage = track.album.images.reduce(

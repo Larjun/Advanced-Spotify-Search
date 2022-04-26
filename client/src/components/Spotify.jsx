@@ -15,27 +15,40 @@ const spotifyApi = new SpotifyWebApi({
     clientId: clientId
 })
 
+
 export default function Spotify(Token) {
     //console.log("Token is: " + Token)
     const spotifyToken = window.location.hash.substring(1).split("&")[0].split('=')[1]
-
-    spotifyApi.setAccessToken(spotifyToken)
-    spotifyApi.getMe()
-    .then(function(data) {
-        console.log(data.body.id);
-        var currUser = data.body.id
-        axios.post('http://localhost:3001/init', {
-            token: spotifyToken,
-            userId: currUser
-            
-        }).then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    });
+   
+    useEffect(() => {
+        var initialized = false;
     
+        if(!initialized) {
+            spotifyApi.setAccessToken(spotifyToken)
+            spotifyApi.getMe()
+            .then(function(data) {
+                console.log(data.body.id);
+                var currUser = data.body.id
+                    spotifyApi.getUserPlaylists(currUser).then(pl => {
+                        axios.post('http://localhost:3001/init', {
+                            token: spotifyToken,
+                            userId: currUser,
+                            playlists: pl.body.items
+                        }).then(function (response) {
+                            console.log(response);
+                            console.log(initialized)
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    }).catch(err => {
+                       console.log(err) 
+                    })
+                    initialized = true
+                });
+        }
+                
+    }, [])
     return (
         <Container>
             <div className='spotify__body'>
