@@ -66,10 +66,26 @@ export const Handle = styled("div")`
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 `;
 
+
+
 const AdvSearch = () => {
   const navToSearch = () => {
 
   }
+
+  const [values0, setValues0] = React.useState([0, 100]);
+
+  const [values1, setValues1] = React.useState([0, 100]);
+
+  const [values2, setValues2] = React.useState([0, 100]);
+
+  const [values3, setValues3] = React.useState([0, 100]);
+
+  const [values4, setValues4] = React.useState([0, 100]);
+
+  const [values5, setValues5] = React.useState([0, 100]);
+
+  const [values6, setValues6] = React.useState([0, 100]);
 
   const spotifyToken = window.location.hash.substring(1).split("&")[0].split('=')[1]
   spotifyApi.setAccessToken(spotifyToken)
@@ -88,12 +104,13 @@ const AdvSearch = () => {
   }
   
   async function generateSongList(
-                                acousL = 0, acousH = 1, 
-                                danceL = 0, danceH = 1, 
-                                enL = 0, enH = 1, instL = 0, 
-                                instH = 1, liveL = 0, liveH = 1, 
-                                speechL = 0, speechH = 1, 
-                                valL = 0, valH = 1, 
+                                acousL = (values0[0]/100), acousH = (values0[1]/100), 
+                                danceL = (values1[0]/100), danceH = (values1[1]/100), 
+                                enL = (values2[0]/100), enH = (values2[1]/100), 
+                                instL = (values3[0]/100), instH = (values3[1]/100), 
+                                liveL = (values4[0]/100), liveH = (values4[1]/100), 
+                                speechL = (values5[0]/100), speechH = (values5[1]/100), 
+                                valL = (values6[0]/100), valH = (values6[1]/100), 
                                 length = 10) {
     var count = 0;
     var trackList = [];
@@ -124,7 +141,7 @@ const AdvSearch = () => {
             if(!trackList.includes(id)) {
               console.log(trackList.length)
               trackList.push(id)
-              console.log("ID: " + id + ", Danceablity: " + song.danceability + ", Energy: " + song.energy)
+              console.log("ID: " + id + ", Acousticness: " + song.acousticness + ", Danceability: " + song.danceability + " Energy: " + song.energy)
             }
         }
         }).catch(error => {
@@ -200,19 +217,7 @@ const AdvSearch = () => {
         })
   }
 
-  const [values0, setValues0] = React.useState([20, 80]);
-
-  const [values1, setValues1] = React.useState([10, 90]);
-
-  const [values2, setValues2] = React.useState([20, 80]);
-
-  const [values3, setValues3] = React.useState([10, 90]);
-
-  const [values4, setValues4] = React.useState([20, 80]);
-
-  const [values5, setValues5] = React.useState([10, 90]);
-
-  const [values6, setValues6] = React.useState([20, 80]);
+  
 
   const { getTrackProps, ticks, segments, handles } = useRanger({
     min: 0,
