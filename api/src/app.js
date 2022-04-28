@@ -6,6 +6,10 @@ const mongoose = require('mongoose');
 const http = require('http');
 const SpotifyWebApi = require('spotify-web-api-node');
 //const User = require('./models/user');
+const Observer = require("./observer")
+const Subject = require("./subject")
+const subject = new Subject().getInstance();
+subject.addObserver(new Observer());
 
 require('dotenv').config();
 const dbLocal = "mongodb+srv://AdvSpotSearchDev:Password123@advspotsearchdb.5vbrx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -49,7 +53,7 @@ var userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", userSchema);
-
+ 
 
 
 // Refresh db, don't do this in production
@@ -73,10 +77,18 @@ var currUserId = "";
 async function getUser(currUser, playlists) {
   const user = await User.findOne({userId: currUser})
   if(!user) {
+    subject.notifyObservers({
+      evntName: "New User",
+      value: currUser
+  })
     //console.log("Creating New User")
     const newUser = await User.create({userId: currUser})
     return newUser
   } else {
+    subject.notifyObservers({
+      evntName: "Returning User",
+      value: currUser
+  })
     //console.log("Updating Playlists")
     user.createdPlaylist = user.createdPlaylist.filter(function(item) {
       for(let i = 0; i < playlists.length; i++) {
@@ -94,7 +106,11 @@ async function addToPlaylist(currUser, playlistId, playlistLink) {
     console.log("Adding To Playlist")
     user.createdPlaylist.push({playlistId: playlistId, playlistUrl: playlistLink})
     user.save()
-    console.log(user)
+    //console.log(user)
+    subject.notifyObservers({
+      evntName: "newPlaylist",
+      value: playlistId
+  })
   }
 }
 
