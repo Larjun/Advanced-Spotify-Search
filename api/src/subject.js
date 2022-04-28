@@ -14,4 +14,18 @@ class Subject {
     }
 }
 
-module.exports = Subject;
+class Singleton {
+
+    constructor() {
+        if (!Singleton.instance) {
+            Singleton.instance = new Subject();
+        }
+    }
+  
+    getInstance() {
+        return Singleton.instance;
+    }
+  
+  }
+  
+  module.exports = Singleton;

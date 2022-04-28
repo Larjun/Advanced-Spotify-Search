@@ -8,8 +8,8 @@ const SpotifyWebApi = require('spotify-web-api-node');
 //const User = require('./models/user');
 const Observer = require("./observer")
 const Subject = require("./subject")
-const subject = new Subject();
-subject.addObserver(new Observer);
+const subject = new Subject().getInstance();
+subject.addObserver(new Observer());
 
 require('dotenv').config();
 const dbLocal = "mongodb+srv://AdvSpotSearchDev:Password123@advspotsearchdb.5vbrx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -77,7 +77,7 @@ var currUserId = "";
 async function getUser(currUser, playlists) {
   const user = await User.findOne({userId: currUser})
   if(!user) {
-    this.notifyObservers({
+    subject.notifyObservers({
       evntName: "New User",
       value: currUser
   })
@@ -85,7 +85,7 @@ async function getUser(currUser, playlists) {
     const newUser = await User.create({userId: currUser})
     return newUser
   } else {
-    this.notifyObservers({
+    subject.notifyObservers({
       evntName: "Returning User",
       value: currUser
   })
@@ -107,7 +107,7 @@ async function addToPlaylist(currUser, playlistId, playlistLink) {
     user.createdPlaylist.push({playlistId: playlistId, playlistUrl: playlistLink})
     user.save()
     //console.log(user)
-    this.notifyObservers({
+    subject.notifyObservers({
       evntName: "newPlaylist",
       value: playlistId
   })
