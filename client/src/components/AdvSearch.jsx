@@ -117,7 +117,6 @@ const AdvSearch = () => {
 
     while(trackList.length < length) {
       var searchQuery = generateQuery(2)
-      //console.log(searchQuery)
       spotifyApi.searchTracks(searchQuery).then(res => {
         var id = res.body.tracks.items[0].id
         //console.log(trackList.length)
@@ -486,7 +485,7 @@ export default AdvSearch
 
 const Container = styled.div`
   
-  margin-bottom: 200px;
+  margin-bottom: 300px;
   h1 {
     font-family: 'Raleway', sans-serif;
     font-weight: 800;

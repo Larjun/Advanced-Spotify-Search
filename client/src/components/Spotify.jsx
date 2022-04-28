@@ -11,9 +11,6 @@ import { useStateProvider } from '../utils/StateProvider';
 import { reducerCases } from '../utils/Constants';
 import AdvSearch from './AdvSearch';
 
-
-
-
 const clientId = 'd677f29341d8486f90c37f08fe86a25e'
 const spotifyApi = new SpotifyWebApi({
     clientId: clientId
@@ -57,13 +54,13 @@ export default function Spotify(Token) {
                 var currUser = data.body.id
                 spotifyApi.getUserPlaylists(currUser).then(pl => {
                     console.log(pl.body.items);
-                    axios.post('http://localhost:3001/init', {
+                    axios.post('https://advspotsearchserver.herokuapp.com/init', {
                         token: spotifyToken,
                         userId: currUser,
                         playlists: pl.body.items
                     }).then(() => {
                         console.log('Getting Playlists')
-                        axios.get('http://localhost:3001/getPlaylists')
+                        axios.get('https://advspotsearchserver.herokuapp.com/getPlaylists')
                         .then((res) => {
                             //console.log(res.data)
                             setPlaylists(result => [res.data])
@@ -90,9 +87,11 @@ export default function Spotify(Token) {
                 <Sidebar playlists={playlists}/>
                 <div className='body'>
                     <Navbar />
-                    <div className='body-contents'>
+                    <div className={window.index === 1 ? 'body-contents-hidden' : 'body-contents'}>
                         <AdvSearch />
-                        
+                    </div>
+                    <div className={window.index === 1 ? 'body-contents-hidden' : 'searchbody-contents'}>
+                        <SearchBody />
                     </div>
                 </div>
             </div>
@@ -121,5 +120,12 @@ const Container = styled.div`
             width: 100%;
             overflow: auto;
         }
+    }
+    .body-contents-hidden{
+        display: none;
+    }
+
+    .searchbody-contents{
+        padding: 2rem 4rem;
     }
     `;
