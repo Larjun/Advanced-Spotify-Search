@@ -14,16 +14,16 @@ const spotifyApi = new spotifyWebApi({
 
 
 
-export default function Sidebar(playlists) {
+export default function Sidebar({playlists, setToggleState}) {
   
-  const [toggleState, setToggleState] = useState(0);
+  //const [toggleState, setToggleState] = useState(0);
 
   window.index = 0;
 
   const setIndex = (index) => {
     setToggleState(index);
-    window.index = index;
-    window.location.reload(true);
+    //window.index = index;
+    //window.location.reload(true);
   }
 
   const spotifyToken = window.location.hash.substring(1).split("&")[0].split('=')[1]

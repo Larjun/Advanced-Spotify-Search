@@ -9,8 +9,8 @@ const spotifyApi = new SpotifyWebApi({
     clientId: clientId
 })
 
-export default function PlaylistInfo(playlistId) {
-
+export default function PlaylistInfo({playlistId}) {
+  
     const [track, setTrack] = useState([])
     const [selectedTrack, setSelectedTrack] = useState([])
     const [audioFeatures, setAudioFeatures] = useState([])

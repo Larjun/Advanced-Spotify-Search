@@ -84,22 +84,29 @@ export default function Spotify(Token) {
     }, [token])
 
     const [toggleState, setToggleState] = useState(1);
-
-    const toggleTab = (index) => {
+    const [recPlaylistId, setRecPlaylistId] = useState("");
+    
+    useEffect(() => {
+        console.log(recPlaylistId)
+    })
+    /*const toggleTab = (index) => {
         setToggleState(index);
-    };
+    };*/
 
     return (
         <Container>
             <div className='spotify__body'>
-                <Sidebar playlists={playlists}/>
+                <Sidebar playlists={playlists} setToggleState={setToggleState}/>
                 <div className='body'>
                     <Navbar />
-                    <div className={window.index === 1 ? 'body-contents-hidden' : 'body-contents'}>
-                        <AdvSearch />
+                    <div className={toggleState === 0 ? 'body-contents' : 'body-contents-hidden'}>
+                        <AdvSearch setRecPlaylistId={setRecPlaylistId}/>
                     </div>
-                    <div className={window.index === 1 ? 'body-contents-hidden' : 'searchbody-contents'}>
+                    <div className={toggleState === 1 ? 'searchbody-contents' : 'body-contents-hidden'}>
                         <SearchBody />
+                    </div>
+                    <div className={toggleState === 2 ? 'playlistBody-contents' : 'body-contents-hidden'}>
+                        <PlaylistInfo playlistId={recPlaylistId}/>
                     </div>
                 </div>
             </div>
@@ -134,6 +141,10 @@ const Container = styled.div`
     }
 
     .searchbody-contents{
+        padding: 2rem 4rem;
+    }
+
+    .playlistBody-contents{
         padding: 2rem 4rem;
     }
     `;

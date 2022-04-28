@@ -23,43 +23,15 @@ export default function SearchBody() {
       //setSelectedTrack(track)
 
       spotifyApi.getTrack(track.id).then(res => {
-        //console.log(res)
+        console.log(res)
         setSelectedTrack(
-          res.body.map(track => {
-            const biggestAlbumUimage = track.album.images.reduce(
-              (biggest, image) => {
-                if (image.height > biggest.height) return image
-                return biggest
-              },
-              track.album.images[0]
-            )
-
-            return {
-              artist: track.artists[0].name,
-              title: track.name,
-              uri: track.uri,
-              albumUrl: biggestAlbumUimage.url,
-              id: track.id
-            }
-          })
+          res.body
         )
-        console.log(track.id)
+        console.log(selectedTrack)
       })
       spotifyApi.getAudioFeaturesForTrack(track.id).then(res => {
         //console.log(res)
         setAudioFeatures(
-          /*res.body.map(track=> {
-            return{
-              acousticness: track.acousticness,
-              danceability: track.danceability,
-              energy: track.energy,
-              instrumentalness: track.instrumentalness,
-              liveness: track.liveness,
-              loudness: track.loudness,
-              speechiness: track.speechiness,
-              valence: track.valence
-            }
-          })*/
           res.body
         )
       })
@@ -67,6 +39,7 @@ export default function SearchBody() {
       //setSearch('')
       
     }
+    
     function printTrackInfo() {
       if(selectedTrack.length == null) {
         const biggestAlbumUimage = selectedTrack.album.images.reduce(

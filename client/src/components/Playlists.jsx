@@ -18,19 +18,22 @@ export default function Playlists(playlistArr) {
       useEffect(() => {
         setPlaylistData([])
         spotifyApi.setAccessToken(token)
-        const pl = playlistArr.playlists.playlists[0]
-        let it = 0
-        if (pl && it == 0) {
-          console.log("Playlist Length: " + pl.length)
-          pl.forEach(async i => {
-            const plInfo = await spotifyApi.getPlaylist(i.playlistId)
-            if(!playlist.includes({'name': plInfo.body.name, 'url': plInfo.body.external_urls.spotify, 'id': plInfo.body.id})){
-              setPlaylistData(curr => [...curr, {'name': plInfo.body.name, 'url': plInfo.body.external_urls.spotify, 'id': plInfo.body.id}])
-              it++
-            } else {
-              setPlaylistData([])
-            }
-          })
+        if(playlistArr.playlist) {
+
+          const pl = playlistArr.playlists.playlists[0]
+          let it = 0
+          if (pl && it == 0) {
+            console.log("Playlist Length: " + pl.length)
+            pl.forEach(async i => {
+              const plInfo = await spotifyApi.getPlaylist(i.playlistId)
+              if(!playlist.includes({'name': plInfo.body.name, 'url': plInfo.body.external_urls.spotify, 'id': plInfo.body.id})){
+                setPlaylistData(curr => [...curr, {'name': plInfo.body.name, 'url': plInfo.body.external_urls.spotify, 'id': plInfo.body.id}])
+                it++
+              } else {
+                setPlaylistData([])
+              }
+            })
+          }
         }
       }, [playlistArr, token])
       
