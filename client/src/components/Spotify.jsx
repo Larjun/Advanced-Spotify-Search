@@ -10,6 +10,7 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import { useStateProvider } from '../utils/StateProvider';
 import { reducerCases } from '../utils/Constants';
 import AdvSearch from './AdvSearch';
+import PlaylistInfo from './PlaylistInfo'
 
 const clientId = 'd677f29341d8486f90c37f08fe86a25e'
 const spotifyApi = new SpotifyWebApi({
@@ -81,6 +82,13 @@ export default function Spotify(Token) {
                 
         }
     }, [token])
+
+    const [toggleState, setToggleState] = useState(1);
+
+    const toggleTab = (index) => {
+        setToggleState(index);
+    };
+
     return (
         <Container>
             <div className='spotify__body'>

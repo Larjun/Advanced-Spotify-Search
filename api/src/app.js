@@ -150,6 +150,11 @@ app.get("/getPlaylists", (req, res) =>{
     })
 })
 
+app.get('/observer', (req, res) => {
+  let string = ["Hello", "World!"]
+  res.send(string)
+})
+
 app.use('/api/v1', api);
 
 app.use(middlewares.notFound);

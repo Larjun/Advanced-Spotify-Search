@@ -21,20 +21,11 @@ export default function SearchBody() {
 
     function chooseTrack(track) {
       //setSelectedTrack(track)
-      
-      axios.post('http://localhost:3001/makePlaylist', {
-        text: "Hello, world"
-      }).then(function (response) {
-          console.log(response);
-      })
-      .catch(function (error) {
-          console.log(error);
-      });
 
       spotifyApi.getTrack(track.id).then(res => {
         //console.log(res)
         setSelectedTrack(
-          /*res.body.map(track => {
+          res.body.map(track => {
             const biggestAlbumUimage = track.album.images.reduce(
               (biggest, image) => {
                 if (image.height > biggest.height) return image
@@ -50,8 +41,7 @@ export default function SearchBody() {
               albumUrl: biggestAlbumUimage.url,
               id: track.id
             }
-          })*/
-          res.body
+          })
         )
         console.log(track.id)
       })
@@ -98,7 +88,6 @@ export default function SearchBody() {
             <h5>Energy: {audioFeatures.energy}</h5>
             <h5>Instrumentalness: {audioFeatures.instrumentalness}</h5>
             <h5>Liveness: {audioFeatures.liveness}</h5>
-            <h5>Loudness: {audioFeatures.loudness} db</h5>
             <h5>Speechiness: {audioFeatures.speechiness}</h5>
             <h5>Valence: {audioFeatures.valence}</h5>
 
