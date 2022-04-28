@@ -15,7 +15,7 @@ export default function PlaylistInfo(playlistId) {
     const [selectedTrack, setSelectedTrack] = useState([])
     const [audioFeatures, setAudioFeatures] = useState([])
     const token = window.location.hash.substring(1).split("&")[0].split('=')[1];
-    const testId = '19m2riYybapIJCU4pf36qY'
+    const testId = playlistId
 
     useEffect(() => {
         if(!token) return
