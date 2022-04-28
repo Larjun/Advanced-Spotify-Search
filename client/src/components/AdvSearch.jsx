@@ -197,7 +197,7 @@ const AdvSearch = () => {
             playlistLink = playlist.body.external_urls.spotify
             spotifyApi.addTracksToPlaylist(playlistId, newTrackList).then((tracks) => {
               console.log("Added tracks to playlist: " + playlistLink)
-              axios.post('http://localhost:3001/addPlaylist', {
+              axios.post('https://advspotsearchserver.herokuapp.com/addPlaylist', {
                 playlistId: playlistId,
                 playlistLink: playlistLink
               }).then((response) => {

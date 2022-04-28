@@ -10,6 +10,7 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import { useStateProvider } from '../utils/StateProvider';
 import { reducerCases } from '../utils/Constants';
 import AdvSearch from './AdvSearch';
+import PlaylistInfo from './PlaylistInfo'
 
 
 
@@ -57,13 +58,13 @@ export default function Spotify(Token) {
                 var currUser = data.body.id
                 spotifyApi.getUserPlaylists(currUser).then(pl => {
                     console.log(pl.body.items);
-                    axios.post('http://localhost:3001/init', {
+                    axios.post('https://advspotsearchserver.herokuapp.com/init', {
                         token: spotifyToken,
                         userId: currUser,
                         playlists: pl.body.items
                     }).then(() => {
                         console.log('Getting Playlists')
-                        axios.get('http://localhost:3001/getPlaylists')
+                        axios.get('https://advspotsearchserver.herokuapp.com/getPlaylists')
                         .then((res) => {
                             //console.log(res.data)
                             setPlaylists(result => [res.data])
@@ -84,6 +85,13 @@ export default function Spotify(Token) {
                 
         }
     }, [token])
+
+    const [toggleState, setToggleState] = useState(1);
+
+    const toggleTab = (index) => {
+        setToggleState(index);
+    };
+
     return (
         <Container>
             <div className='spotify__body'>
@@ -91,7 +99,7 @@ export default function Spotify(Token) {
                 <div className='body'>
                     <Navbar />
                     <div className='body-contents'>
-                        <AdvSearch />
+                        <PlaylistInfo />
                         
                     </div>
                 </div>
