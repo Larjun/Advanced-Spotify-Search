@@ -68,7 +68,7 @@ export const Handle = styled("div")`
 
 
 
-const AdvSearch = () => {
+export default function AdvSearch({setRecPlaylistId}) {
   const navToSearch = () => {
 
   }
@@ -138,9 +138,9 @@ const AdvSearch = () => {
           song.valence <= valH 
           ) {
             if(!trackList.includes(id)) {
-              console.log(trackList.length)
+              //console.log(trackList.length)
               trackList.push(id)
-              console.log("ID: " + id + ", Acousticness: " + song.acousticness + ", Danceability: " + song.danceability + " Energy: " + song.energy)
+              //console.log("ID: " + id + ", Acousticness: " + song.acousticness + ", Danceability: " + song.danceability + " Energy: " + song.energy)
             }
         }
         }).catch(error => {
@@ -196,6 +196,8 @@ const AdvSearch = () => {
             playlistLink = playlist.body.external_urls.spotify
             spotifyApi.addTracksToPlaylist(playlistId, newTrackList).then((tracks) => {
               console.log("Added tracks to playlist: " + playlistLink)
+              alert("Playlist created, link: " + playlistLink)
+              setRecPlaylistId(playlistId)
               axios.post('https://advspotsearchserver.herokuapp.com/addPlaylist', {
                 playlistId: playlistId,
                 playlistLink: playlistLink
@@ -481,7 +483,7 @@ const AdvSearch = () => {
   );
 }
 
-export default AdvSearch
+//xport default AdvSearch
 
 const Container = styled.div`
   
