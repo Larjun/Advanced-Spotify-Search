@@ -20,72 +20,10 @@ export default function Sidebar(playlists) {
 
   window.index = 0;
 
-<<<<<<< HEAD
-  function callSearch() {
-      console.log('post request attempted')
-      var danceL = 0.4
-      var danceH = 0.6
-      var eneL = 0.4
-      var eneH = 0.9
-      const searchTrack = new Promise((resolve, reject) => {
-        var trackList = generateSongList(
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          10
-        )
-        resolve(trackList)
-      }) 
-      
-      searchTrack.then((trackList) => {
-        var playlistId
-        var playlistLink
-        var newTrackList = []
-        for (let i = 0; i < trackList.length; i++) {
-          newTrackList.push("spotify:track:" + trackList[i])
-        }
-        console.log(newTrackList)
-        
-          spotifyApi.createPlaylist('Playist Made In Adv Search', {'description' : 'Made in advance spotify search', 'public': true}).then((playlist) => {
-            playlistId = playlist.body.id;
-            playlistLink = playlist.body.external_urls.spotify
-            spotifyApi.addTracksToPlaylist(playlistId, newTrackList).then((tracks) => {
-              console.log("Added tracks to playlist: " + playlistLink)
-              axios.post('https://advspotsearchserver.herokuapp.com/addPlaylist', {
-                playlistId: playlistId,
-                playlistLink: playlistLink
-              }).then((response) => {
-                console.log("Post is made successfully")
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-            }).catch((error) => {
-              console.log(error)
-            })
-          }).catch((err) => {
-            console.log(err)
-          })
-          
-        })
-=======
   const setIndex = (index) => {
     setToggleState(index);
     window.index = index;
     window.location.reload(true);
->>>>>>> 0ad216474c32d4473248094d77e1c2df2722f300
   }
 
   const spotifyToken = window.location.hash.substring(1).split("&")[0].split('=')[1]
