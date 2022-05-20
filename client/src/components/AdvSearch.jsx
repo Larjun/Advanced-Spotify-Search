@@ -3,6 +3,7 @@ import axios from 'axios'
 import spotifyWebApi from 'spotify-web-api-node'
 import styled from "styled-components";
 import { useRanger } from "react-ranger";
+import whiteSpotifyLogo from './../assets/spotify-white-logopng.png';
 
 const clientId = 'd677f29341d8486f90c37f08fe86a25e'
 const spotifyApi = new spotifyWebApi({
@@ -157,6 +158,7 @@ export default function AdvSearch({setRecPlaylistId}) {
 
   function callSearch() {
       console.log('post request attempted')
+      window.alert("Generating new playlist based on your specifications.");
       var danceL = 0.4
       var danceH = 0.6
       var eneL = 0.4
@@ -278,8 +280,13 @@ export default function AdvSearch({setRecPlaylistId}) {
 
   return (
     <Container>
-      <h1>Advanced Search</h1>
-      <p>Create playlists based on song characteristics</p>
+      <div className='header'>
+        <img src={whiteSpotifyLogo}/>
+        <div className='header-text'>
+          <h1>Advanced Search</h1>
+          <p>Create playlists based on song characteristics</p>
+        </div>
+      </div>
       <br />
       <br />
       <h2> Acousticness </h2>
@@ -479,6 +486,10 @@ export default function AdvSearch({setRecPlaylistId}) {
       <br />
       
       <button className="submitButton" onClick={()=>callSearch()}>Generate Playlist</button>
+      <div className='submit-text'>
+        <p>Once the app has accumulated 10 songs, it will save them to your Spotify profile as a new playlist.</p>
+        <p>Please note using specific criteria can result in this process taking up to several minutes.</p>
+      </div>
     </Container>
   );
 }
@@ -486,11 +497,27 @@ export default function AdvSearch({setRecPlaylistId}) {
 //xport default AdvSearch
 
 const Container = styled.div`
-  
+  .submit-text {
+    padding: 0rem 5rem;
+  }
+  .header{
+    display: flex;
+    flex-direction: row;
+    img {
+      padding: 0rem 5rem;
+      max-width: 300px;
+      
+    }
+  }
   margin-bottom: 300px;
   h1 {
     font-family: 'Raleway', sans-serif;
     font-weight: 800;
+    color: white;
+    padding: 1rem 0rem;
+  }
+
+  h2 {
     color: white;
     padding: 0rem 5rem;
   }
@@ -499,13 +526,10 @@ const Container = styled.div`
     font-family: 'Raleway', sans-serif;
     font-weight: 300;
     color: lightgray;
-    padding: 0rem 5rem;
+    padding: 0rem 0rem;
   }
 
-  h2 {
-    color: white;
-    padding: 0rem 5rem;
-  }
+  
 
   .submitButton {
     margin: 3rem 5rem;
@@ -552,6 +576,6 @@ const Container = styled.div`
     box-shadow: #1ed760 0 3px 7px inset;
     transform: translateY(2px);
   }
-    
+
 }
 `;

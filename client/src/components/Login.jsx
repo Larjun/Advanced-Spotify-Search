@@ -7,7 +7,7 @@ export default function Login() {
 
     const handleClick = () => {
         const clientId = 'd677f29341d8486f90c37f08fe86a25e';
-        const redirectUrl = "https://advance-spotify-search.herokuapp.com/";
+        const redirectUrl = "http://localhost:3001/";
         const apiUrl = "https://accounts.spotify.com/authorize";
         const scope = [
             'user-read-email', 

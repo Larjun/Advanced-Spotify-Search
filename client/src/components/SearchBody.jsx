@@ -3,6 +3,7 @@ import axios from 'axios'
 import {Container, Form, Row, Col, Button} from 'react-bootstrap'
 import SpotifyWebApi from 'spotify-web-api-node'
 import TrackSearchResult from './TrackSearchResult'
+import styled from 'styled-components'
 
 
 const clientId = 'd677f29341d8486f90c37f08fe86a25e'
@@ -113,8 +114,9 @@ export default function SearchBody() {
       }, [search, token])
 
     return (
+      
         <Container className="d-flex flex-column py-2" style={{height: "100vh"}}>
-
+          <h1 style={{color: 'white'}}>Song Lookup</h1>
           <Row className="py-2">
             <Form.Control type="search" placeholder="Search Songs" value={search} onChange={e=>
               setSearch(e.target.value)}

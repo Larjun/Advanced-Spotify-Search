@@ -15,15 +15,11 @@ const spotifyApi = new spotifyWebApi({
 
 
 export default function Sidebar({playlists, setToggleState}) {
-  
-  //const [toggleState, setToggleState] = useState(0);
 
   window.index = 0;
 
   const setIndex = (index) => {
     setToggleState(index);
-    //window.index = index;
-    //window.location.reload(true);
   }
 
   const spotifyToken = window.location.hash.substring(1).split("&")[0].split('=')[1]
@@ -38,19 +34,18 @@ export default function Sidebar({playlists, setToggleState}) {
         <ul>
           <li>
             <MdHomeFilled />
-            <span onClick={() => setIndex(0)}>Home</span>
+            <span onClick={() => setIndex(0)}>Advanced Search</span>
           </li>
           <li>
             <MdSearch />
-            <a><span onClick={() => setIndex(1)}>Search</span></a>
+            <a><span onClick={() => setIndex(1)}>Song Lookup</span></a>
           </li>
           <li>
             <IoLibrary />
-            <span onClick={() => setIndex(2)}>Your Library</span>
+            <span onClick={() => setIndex(2)}>Recently Created</span>
           </li>
         </ul>
       </div>
-      <Playlists playlists={playlists}/>
     </Container2>
   )
 }
